@@ -1,10 +1,10 @@
+from time import time
+
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
-import torchvision
-import matplotlib.pyplot as plt
-from time import time
-from torchvision import datasets, transforms
 from torch import nn, optim
+from torchvision import datasets, transforms
 
 transform = transforms.Compose([transforms.ToTensor(),
                                 transforms.Normalize((0.5,), (0.5,)),
@@ -39,14 +39,14 @@ images, labels = dataiter.next()
 print(images.shape)
 print(labels.shape)
 
-plt.imshow(images[0].numpy().squeeze(), cmap='gray_r');
+plt.imshow(images[0].numpy().squeeze(), cmap='gray_r')
 
 figure = plt.figure()
 num_of_images = 60
 for index in range(1, num_of_images + 1):
     plt.subplot(6, 10, index)
     plt.axis('off')
-    plt.imshow(images[index].numpy().squeeze(), cmap='gray_r')
+    #plt.imshow(images[index].numpy().squeeze(), cmap='gray_r')
 
     input_size = 784
     hidden_sizes = [128, 64]
