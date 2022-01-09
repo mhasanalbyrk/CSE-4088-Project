@@ -24,7 +24,7 @@ def validate(model, data):
     return correct*100./total
 
 
-def train(model, dataset, val_dataset, numb_epoch=10, lr=1e-3, device="cpu"):
+def train(model, dataset, val_dataset, numb_epoch=15, lr=1e-3, device="cpu"):
     cnn = model.to(device)
     cec = nn.CrossEntropyLoss()
     optimizer = optim.Adam(cnn.parameters(), lr=lr)
