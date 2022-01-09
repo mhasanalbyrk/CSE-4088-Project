@@ -30,8 +30,8 @@ def view_classify(img, ps):
 
 trainset = datasets.MNIST('data', download=True, train=True, transform=transform)
 valset = datasets.MNIST('data', download=True, train=False, transform=transform)
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
-valloader = torch.utils.data.DataLoader(valset, batch_size=64, shuffle=True)
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=128, shuffle=True)
+valloader = torch.utils.data.DataLoader(valset, batch_size=128, shuffle=True)
 
 dataiter = iter(trainloader)
 images, labels = dataiter.next()
@@ -52,7 +52,8 @@ for index in range(1, num_of_images + 1):
     hidden_sizes = [128, 64]
     output_size = 10
 
-    model = nn.Sequential(nn.Linear(input_size, hidden_sizes[0]),
+    model = nn.Sequential(nn.Flatten(),
+                          nn.Linear(input_size, hidden_sizes[0]),
                           nn.ReLU(),
                           nn.Linear(hidden_sizes[0], hidden_sizes[1]),
                           nn.ReLU(),

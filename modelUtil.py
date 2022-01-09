@@ -46,7 +46,7 @@ def predict(path, model, device):
 
 def get_model():
     device = torch.device("cpu")
-    dataset, val_dataset = get_dataset(64)
+    dataset, val_dataset = get_dataset(128)
     model = train(create_model(), dataset, val_dataset, device=device)
     return model
 
