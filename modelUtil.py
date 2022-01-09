@@ -55,13 +55,24 @@ def get_model():
     return model
 
 
+def predict_local_2(path, model, device):
+    img = Image.open(path).convert(mode="L")
+    img = ImageOps.invert(img)
+    img = img.resize((28, 28))
+    x = (255 - np.expand_dims(np.array(img), -1)) / 255.
+    # x = (255 - np.expand_dims(np.array(img), -1)) / 255.
+    with torch.no_grad():
+        pred = model(torch.unsqueeze(T(x), axis=0).float().to(device))
+        return F.softmax(pred, dim=-1).cpu().numpy()
+
+
 def predict_local(path, model, device):
     img = Image.open(path).convert(mode="L")
     img = ImageOps.invert(img)
     img = img.resize((28, 28))
     img = T(img)
-    img = img.view(1,784)
-    #x = (255 - np.expand_dims(np.array(img), -1)) / 255.
+    img = img.view(1, 784)
+    # x = (255 - np.expand_dims(np.array(img), -1)) / 255.
     with torch.no_grad():
         pred = model(img)
         return F.softmax(pred, dim=-1).cpu().numpy()

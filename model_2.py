@@ -1,39 +1,31 @@
-import torch, torchvision
-from torch import nn
-from torch import optim
-from torchvision.transforms import ToTensor
-import torch.nn.functional as F
-import matplotlib.pyplot as plt
-from PIL import Image
-from io import BytesIO
-
-from modelUtil import get_model, predict, create_model, predict_local
-
-import copy
 import numpy as np
+import torch
+import torchvision
 
+from modelUtil import create_model, predict_local, predict_local_2
 
 T = torchvision.transforms.Compose([
     torchvision.transforms.ToTensor()
 ])
 
-
 if __name__ == "__main__":
-    #model = create_model()
-    # model.load_state_dict(torch.load('model/model.pt'))
+    model_2 = create_model()
+    model_2.load_state_dict(torch.load('model/model.pt'))
 
-    # model = torch.load("my_mnist_model.pt")
-    # model.eval()
-    model = get_model()
-    torch.save(model.state_dict(), "model/model.pt")
+    model_1 = torch.load("my_mnist_model.pt")
+    model_1.eval()
+# model_1 = get_model()
+# torch.save(model_1.state_dict(), "model/model.pt")
 
     device = torch.device("cpu")
 
+    path = "0.png"
+    for i in range(10):
+        pred = predict_local(path, model_1, device)
+        pred_idx = np.argmax(pred)
+        print(f'Predicted: {pred_idx}, Prob: {pred[0][pred_idx] * 100} %')
 
-
-    path = "8.jpg"
-    pred = predict_local(path, model, device)
-    pred_idx = np.argmax(pred)
-    print(f'Predicted: {pred_idx}, Prob: {pred[0][pred_idx] * 100} %')
-
-
+    for i in range(10):
+        pred = predict_local_2(path, model_2, device)
+        pred_idx = np.argmax(pred)
+        print(f'Predicted: {pred_idx}, Prob: {pred[0][pred_idx] * 100} %')
