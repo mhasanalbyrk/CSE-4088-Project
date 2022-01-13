@@ -6,7 +6,7 @@ import torch
 import win32gui
 from PIL import ImageGrab, ImageOps
 from keras.models import load_model
-from modelUtil import predict_local_2, create_model, predict_local_3
+from modelUtil import predict_local_2, create_model, predict_local_3, predict_local_2_normal
 
 # model = load_model('mnist.h5'
 model = create_model()
@@ -56,15 +56,19 @@ class App(tk.Tk):
         path = "imgs/" +"test" + ".jpg"
         im.save(path)
         pred = predict_local_2(path, model, device)
+        pred2 = predict_local_2_normal(path, model, device)
         #num = num + 1
         pred_idx = np.argmax(pred)
+        pred_idx2 = np.argmax(pred2)
         print(f'Predicted: {pred_idx}, Prob: {pred[0][pred_idx] * 100} %')
-        self.label.configure(text=str(pred_idx) + ', ' + str(int(pred[0][pred_idx] * 100)) + '%')
+        print(f'Predicted normal : {pred_idx2}, Prob: {pred2[0][pred_idx2] * 100} %')
+
+        self.label.configure(text=str(pred_idx2) + ', ' + str(int(pred2[0][pred_idx2] * 100)) + '%')
 
     def draw_lines(self, event):
         self.x = event.x
         self.y = event.y
-        r = 8
+        r = 22
         self.canvas.create_oval(self.x - r, self.y - r, self.x + r, self.y + r, fill='black')
 
 

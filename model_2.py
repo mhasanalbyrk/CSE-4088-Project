@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     device = torch.device("cpu")
 
-    path = "imgs/im.jpg"
+    path = "imgs/test.jpg"
     for i in range(10):
         pred = predict_local(path, model_1, device)
         pred_idx = np.argmax(pred)
