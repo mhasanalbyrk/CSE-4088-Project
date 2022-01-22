@@ -46,7 +46,6 @@ def predict(path, model, device):
         return F.softmax(pred, dim=-1).cpu().numpy()
 
 
-# def train(model, dataset, val_dataset, numb_epoch=3, lr=1e-3, device="cpu"):
 
 def get_model():
     device = torch.device("cpu")
@@ -68,7 +67,7 @@ def predict_local_2(path, model, device):
 
 def predict_local_2_normal(path, model, device):
     img = Image.open(path).convert(mode="L")
-    #img = ImageOps.invert(img)
+    # img = ImageOps.invert(img)
     img = img.resize((28, 28))
     x = (255 - np.expand_dims(np.array(img), -1)) / 255.
     # x = (255 - np.expand_dims(np.array(img), -1)) / 255.
@@ -76,8 +75,9 @@ def predict_local_2_normal(path, model, device):
         pred = model(torch.unsqueeze(T(x), axis=0).float().to(device))
         return F.softmax(pred, dim=-1).cpu().numpy()
 
+
 def predict_local_3(img, model, device):
-    #img = Image.open(path).convert(mode="L")
+    # img = Image.open(path).convert(mode="L")
     img = ImageOps.invert(img)
     img = img.resize((28, 28))
 
@@ -88,6 +88,7 @@ def predict_local_3(img, model, device):
     with torch.no_grad():
         pred = model(torch.unsqueeze(T(x), axis=0).float().to(device))
         return F.softmax(pred, dim=-1).cpu().numpy()
+
 
 def predict_local(path, model, device):
     img = Image.open(path).convert(mode="L")
