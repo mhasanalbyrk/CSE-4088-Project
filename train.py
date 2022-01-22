@@ -1,15 +1,9 @@
-import torch, torchvision
-from torch import nn
-from torch import optim
-from torchvision.transforms import ToTensor
-import torch.nn.functional as F
-
-from PIL import Image
-from io import BytesIO
-
 import copy
 
-import numpy as np
+import torch
+from torch import nn
+from torch import optim
+
 
 def validate(model, data):
     total = 0
